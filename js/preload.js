@@ -1,12 +1,5 @@
 // 借助于zetop.js实现，图片预加载
 (function($) {
-    function _screen_load() { // 页面追加等待框
-        var ele = '<div id="preloadLoading" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;background-color:#f2f2f2;">';
-        ele += '<span id="preloadNum" style="display:block;font-size:40px;color#333;text-align:center;margin-top:300px;">0%</span>';
-        ele += '</div>';
-
-        $('body').append(ele);
-    };
     function _screen_all_load() { // 所有方法执行完之后执行的方法
         $("#preloadLoading").hide();
     }
@@ -17,6 +10,13 @@
         each: _screen_each_load, // 每一张图片加载完后执行此方法
         all: _screen_all_load, // 所有图片加载完后执行此方法
         flag: true
+    };
+    Preload.prototype._screen_load = function() { // 页面追加等待框
+        var ele = '<div id="preloadLoading" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:999;background-color:#f2f2f2;">';
+        ele += '<span id="preloadNum" style="display:block;font-size:40px;color#333;text-align:center;margin-top:300px;">0%</span>';
+        ele += '</div>';
+
+        $('body').append(ele);
     };
     Preload.prototype._unoredered = function() { // 无序加载
         var imgs = this.imgs;
@@ -43,7 +43,7 @@
         this.imgs = (typeof imgs === 'string') ? [imgs] : imgs;
         this.opts = $.extend({}, Preload.DETAULT, options); // 合并默认参数和传入参数，返回新的参数
         if(this.opts.flag) {
-            _screen_load();
+            this._screen_load();
         }
         this._unoredered();
     };
