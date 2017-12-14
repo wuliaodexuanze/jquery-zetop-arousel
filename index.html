@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试</title>
+</head>
+<style>
+    li {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    a {
+        text-decoration: none;
+    }
+    .box {
+        width: 1000px;
+        height: 600px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .box li img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .btn {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        color: #333;
+        padding: 0 10px;
+    }
+    .btn:hover {
+        background-color: #eee;
+    }
+</style>
+<body>
+    <div>
+        <ul class="box">
+            <li><img src="https://opensourcefriday.com/assets/oss-bike-eb4e24f03fb60f4616e4cd402418035690832293146a317afe198347d0d44ba6.svg" alt=""></li>
+        </ul>
+        <div>
+            <a href="javascript:;" class="btn" data-type="prev">上一页</a>
+            <a href="javascript:;" class="btn" data-type="next">下一页</a>
+        </div>
+    </div>
+    
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.12.2/jquery.min.js"></script> -->
+    <script src="js/zepto.min.js"></script>
+    <script src="js/preload.js"></script>
+    <script>
+        var imgObj = $("img");
+        var imgUrls = [
+            'https://opensourcefriday.com/assets/oss-bike-eb4e24f03fb60f4616e4cd402418035690832293146a317afe198347d0d44ba6.svg',
+            'https://dwa5x7aod66zk.cloudfront.net/assets/sdp-backpack-a64038716bf134f45e809ff86b9611fb97e41bbd2ccfa3181da73cf164d3c200.png',
+            'https://assets-cdn.github.com/images/modules/site/stories/customers/mailchimp.png',
+            'https://assets-cdn.github.com/images/modules/site/home-illo-team.svg',
+            'https://githubcampus.expert/assets/images/marker-icon.png',
+        ];
+        var len = imgUrls.length;
+        var index = 0;
+        $.preload(imgUrls);
+
+        $(".btn").on("click", function() {
+            var current_type = $(this).data('type');
+            if(current_type === 'prev') {
+                index = Math.max(0, --index);
+            }else {
+                index = Math.min(len -1, ++index)
+            }
+            $("img").attr('src', imgUrls[index]);
+        });
+    </script>
+</body>
+</html>
